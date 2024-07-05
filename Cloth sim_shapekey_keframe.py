@@ -4,7 +4,7 @@ import bpy
 frame_current= bpy.data.scenes["Scene"].frame_current #
 frame_start = bpy.data.scenes["Scene"].frame_start    #
 frame_end = bpy.data.scenes["Scene"].frame_end        #
-frame_skip = 0                                        #
+frame_skip = 1                                        #
 #######################################################
 
 
@@ -37,6 +37,7 @@ if bpy.context.object.modifiers["Cloth"].show_viewport == False:  #
 
 ######################################################################################
                                 #Set up shape keys                                   #
+go_to_frame(frame_start)                                                             #
 for i in range(frame_start, frame_end+1):                                            #
     bpy.ops.object.modifier_apply_as_shapekey(keep_modifier=True, modifier="Cloth")  #
     bpy.context.scene.frame_current = i+1                                            #
@@ -49,6 +50,7 @@ bpy.data.shape_keys["Key"].use_relative = False #
 #################################################
 
 def main():
+    
  #####################################################################
                 #Interpolation keyframe method                       #
     if frame_skip == 0:                                              #
@@ -62,12 +64,12 @@ def main():
 ##########################################################################################################
                         #Continoius keyframe method                                                      #
     else:                                                                                                #
-        bpy.context.scene.frame_current = 1                                                              #
+        go_to_frame(frame_start)                                                                         #
         obj = bpy.context.object.data.shape_keys                                                         #
         while bpy.data.scenes["Scene"].frame_current <= frame_end:                                       #
             bpy.data.shape_keys["Key"].eval_time = (bpy.data.scenes["Scene"].frame_current*10)           #
             obj.keyframe_insert("eval_time")                                                             #
-            bpy.data.scenes["Scene"].frame_current = bpy.data.scenes["Scene"].frame_current + frame_skip #
+            bpy.data.scenes["Scene"].frame_current += frame_skip                                         #
         bpy.context.object.modifiers["Cloth"].show_viewport = False                                      #
         go_to_frame(frame_current)                                                                       #
 ##########################################################################################################
