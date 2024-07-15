@@ -3,7 +3,7 @@ import bpy
  
 icons = bpy.utils.previews.new()
 
-icons.load(name='CUBE', path=r'C:\Users\lenovo\Downloads\EP.12.v1.1696908023.480p.mp4', path_type='IMAGE')
+icons.load(name='CUBE', path=r'C:\Users\lenovo\Downloads\0442fe6060be23664a9b049d1e56c8c6.jpeg', path_type='IMAGE')
 
 class OBJECT_PT_CustomPanel(bpy.types.Panel):
     bl_label = "Custom Mesh Panel"
@@ -14,7 +14,8 @@ class OBJECT_PT_CustomPanel(bpy.types.Panel):
     bl_context = "objectmode"
  
     def draw(self, context):
-        self.layout.operator(operator='mesh.primitive_cube_add', text='Add Cube', icon_value=icons['CUBE'].icon_id)
+        self.layout.template_icon(icon_value=icons["CUBE"].icon_id, scale=8.0)
+        self.layout.operator(operator='mesh.primitive_cube_add', text='Add Cube', icon_value=icons['CUBE'].icon_id, )
        
 def register():
     bpy.utils.register_class(OBJECT_PT_CustomPanel)
